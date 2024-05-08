@@ -8,5 +8,5 @@ import { multi } from './src/plugins/multi.js';
 import { selectorPatterns } from './src/plugins/selector-patterns.js';
 import { signals } from './src/plugins/signals.js';
 import type { TurbinePlugin } from 'tailwind-turbine';
-declare const turbine: TurbinePlugin;
-export { defaultShades, directionalShadows, js, lerpColors, members, mixins, multi, selectorPatterns, signals, turbine, };
+declare const superset: TurbinePlugin;
+export { defaultShades, directionalShadows, js, lerpColors, members, mixins, multi, selectorPatterns, signals, superset, };
