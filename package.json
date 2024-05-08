@@ -57,7 +57,7 @@
     "eslint-plugin-prettier": "^5.0.0-alpha.1",
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
-    "tailwind-turbine": "^0.0.15",
+    "tailwind-turbine": "^0.0.16",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.1.6"
   }
