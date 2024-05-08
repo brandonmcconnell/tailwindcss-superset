@@ -15,7 +15,7 @@ type DefaultShadesOptions = Parameters<typeof defaultShades>[1];
 type JsOptions = Parameters<typeof js>[0];
 type LerpColorsOptions = NonNullable<Parameters<typeof lerpColors>[1]>;
 
-const turbine: TurbinePlugin = (options: {
+interface SupersetOptions {
   defaultShades?: boolean | DefaultShadesOptions;
   js?: boolean | JsOptions;
   lerpColors?: boolean | LerpColorsOptions;
@@ -25,31 +25,51 @@ const turbine: TurbinePlugin = (options: {
   multi?: boolean;
   selectorPatterns?: boolean;
   signals?: boolean;
-}) => ({
-  transform: (config) => {
-    const { defaultShades: defaultShadesOption, lerpColors: lerpColorsOption } = options;
-    if (defaultShadesOption) {
-      config.theme.colors = Turbine.resolve(config.theme.colors, (themeColors) =>
-        defaultShades(themeColors, defaultShadesOption === true ? undefined : defaultShadesOption)
-      );
-    }
-    if (lerpColorsOption) {
-      config.theme.colors = Turbine.resolve(config.theme.colors, (themeColors) =>
-        lerpColors(themeColors, lerpColorsOption === true ? undefined : lerpColorsOption)
-      );
-    }
-    return config;
-  },
-  plugins: [
-    ...(options.directionalShadows ? [directionalShadows] : []),
-    ...(options.js ? [js(options.js === true ? {} : options.js)] : []),
-    ...(options.members ? [members] : []),
-    ...(options.mixins ? [mixins] : []),
-    ...(options.multi ? [multi] : []),
-    ...(options.selectorPatterns ? [selectorPatterns] : []),
-    ...(options.signals ? [signals] : []),
-  ],
-});
+}
+
+const defaultSupersetOptions: SupersetOptions = {
+  defaultShades: true,
+  js: true,
+  lerpColors: true,
+  directionalShadows: true,
+  members: true,
+  mixins: true,
+  multi: true,
+  selectorPatterns: true,
+  signals: true,
+}
+
+const turbine: TurbinePlugin = (supersetOptions: SupersetOptions = {}) => {
+  const options = {
+    ...defaultSupersetOptions,
+    ...supersetOptions,
+  };
+  return {
+    transform: (config) => {
+      const { defaultShades: defaultShadesOption, lerpColors: lerpColorsOption } = options;
+      if (defaultShadesOption) {
+        config.theme.colors = Turbine.resolve(config.theme.colors, (themeColors) =>
+          defaultShades(themeColors, defaultShadesOption === true ? undefined : defaultShadesOption)
+        );
+      }
+      if (lerpColorsOption) {
+        config.theme.colors = Turbine.resolve(config.theme.colors, (themeColors) =>
+          lerpColors(themeColors, lerpColorsOption === true ? undefined : lerpColorsOption)
+        );
+      }
+      return config;
+    },
+    plugins: [
+      ...(options.directionalShadows ? [directionalShadows] : []),
+      ...(options.js ? [js(options.js === true ? {} : options.js)] : []),
+      ...(options.members ? [members] : []),
+      ...(options.mixins ? [mixins] : []),
+      ...(options.multi ? [multi] : []),
+      ...(options.selectorPatterns ? [selectorPatterns] : []),
+      ...(options.signals ? [signals] : []),
+    ],
+  };
+};
 
 export {
   defaultShades,
