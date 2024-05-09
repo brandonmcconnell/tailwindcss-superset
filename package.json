@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brandonmcconnell/tailwindcss-signals.git"
+    "url": "git+https://github.com/brandonmcconnell/tailwindcss-superset.git"
   },
   "keywords": [
     "css",
@@ -31,7 +31,7 @@
     "group",
     "groups",
     "grouping",
-    "signals",
+    "superset",
     "plugin",
     "plugins",
     "tailwind",
@@ -40,9 +40,9 @@
   "author": "Brandon McConnell",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/brandonmcconnell/tailwindcss-signals/issues"
+    "url": "https://github.com/brandonmcconnell/tailwindcss-superset/issues"
   },
-  "homepage": "https://github.com/brandonmcconnell/tailwindcss-signals#readme",
+  "homepage": "https://github.com/brandonmcconnell/tailwindcss-superset#readme",
   "dependencies": {
     "@types/node": "^20.4.1"
   },
