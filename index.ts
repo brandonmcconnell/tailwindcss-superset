@@ -46,16 +46,23 @@ const superset: TurbinePlugin = (supersetOptions: SupersetOptions = {}) => {
   };
   return {
     transform: (config) => {
-      const { defaultShades: defaultShadesOption, lerpColors: lerpColorsOption } = options;
-      if (defaultShadesOption) {
-        config.theme.colors = Turbine.resolve(config.theme.colors, (themeColors) =>
-          defaultShades(themeColors, defaultShadesOption === true ? undefined : defaultShadesOption)
-        );
+      const { defaultShades: defaultShadesOptions, lerpColors: lerpColorsOptions } = options;
+      if (lerpColorsOptions) {
+        Turbine.extend(config.theme, (theme, isExtend) => {
+          const baseOptions = typeof lerpColorsOptions === 'boolean' ? {} : lerpColorsOptions;
+          const extendOptions = isExtend ? { includeBase: false, includeLegacy: false } : {};
+          const options = { ...baseOptions, ...extendOptions };
+          theme.colors = Turbine.resolve(theme.colors, (themeColors) =>
+            lerpColors(themeColors, lerpColorsOptions === true ? undefined : options)
+          );
+        });
       }
-      if (lerpColorsOption) {
-        config.theme.colors = Turbine.resolve(config.theme.colors, (themeColors) =>
-          lerpColors(themeColors, lerpColorsOption === true ? undefined : lerpColorsOption)
-        );
+      if (defaultShadesOptions) {
+        Turbine.extend(config.theme, (theme) => {
+          theme.colors = Turbine.resolve(theme.colors, (themeColors) =>
+            defaultShades(themeColors, defaultShadesOptions === true ? undefined : defaultShadesOptions)
+          );
+        });
       }
       return config;
     },
