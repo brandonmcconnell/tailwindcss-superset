@@ -37,7 +37,7 @@ const defaultSupersetOptions: SupersetOptions = {
   multi: true,
   selectorPatterns: true,
   signals: true,
-}
+};
 
 const superset: TurbinePlugin = (supersetOptions: SupersetOptions = {}) => {
   const options = {
